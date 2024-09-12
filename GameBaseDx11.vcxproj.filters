@@ -96,9 +96,6 @@
     <ClCompile Include="Engine\VFX.cpp">
       <Filter>01Engine\ResourceManager</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Weapon.cpp" />
-    <ClCompile Include="JointBall.cpp" />
     <ClCompile Include="KuruKuruImage.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -172,9 +169,6 @@
     <ClInclude Include="Engine\VFX.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Weapon.h" />
-    <ClInclude Include="JointBall.h" />
     <ClInclude Include="KuruKuruImage.h" />
   </ItemGroup>
   <ItemGroup>
@@ -190,11 +184,8 @@
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">
       <Filter>02Shader</Filter>
     </FxCompile>
-    <FxCompile Include="KuruKuru.hlsl">
+    <FxCompile Include="Assets\Shader\KuruKuru.hlsl">
       <Filter>02Shader</Filter>
     </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>

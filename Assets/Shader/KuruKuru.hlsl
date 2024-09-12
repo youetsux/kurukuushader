@@ -12,7 +12,8 @@ cbuffer global
 {
     matrix g_matWorld; // 頂点座標変換行列
     matrix g_matTexture; // テクスチャ座標変換行列
-    float4 g_vecColor; // テクスチャ合成色
+    float4 g_vecColor; // テクスチャ合成
+    float2 g_angle;
 };
 
 //───────────────────────────────────────
@@ -39,6 +40,32 @@ VS_OUTPUT VS(float4 pos : POSITION, float4 uv : TEXCOORD)
 // ピクセルシェーダ
 //───────────────────────────────────────
 float4 PS(VS_OUTPUT input) : SV_Target
-{
-    return g_vecColor * g_texture.Sample(g_sampler, input.uv);
+{  
+    float2 uvpos = float2(2.0 * input.uv.x - 1, 1.0 - 2 * input.uv.y);
+    float ang = atan2(uvpos.y, uvpos.x);
+    float dig = degrees(ang);
+    if (dig < 0)
+        dig = dig + 360;
+    if (g_angle.x < g_angle.y)
+    {
+   
+        if (dig > g_angle.x && dig < g_angle.y)
+        {
+            return g_vecColor * g_texture.Sample(g_sampler, input.uv);
+        }
+        else
+            return (0, 0, 0, 0);
+    }
+    else if (g_angle.x > g_angle.y)
+    {
+        if (dig < g_angle.x && dig > g_angle.y)
+        {
+           return (0, 0, 0, 0);
+        }
+        else
+           return g_vecColor * g_texture.Sample(g_sampler, input.uv);
+    }else
+    {
+        return g_vecColor * g_texture.Sample(g_sampler, input.uv);
+    }
 }

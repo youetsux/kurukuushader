@@ -11,11 +11,8 @@ TestScene::TestScene(GameObject * parent)
 //‰Šú‰»
 void TestScene::Initialize()
 {	
-	//pWp = Instantiate<Weapon>(this);
-	Instantiate <Player>(this);
 	kImage = new KuruKuruImage();
 	kImage->Load("roundTimer.png");
-
 }
 
 //XV
@@ -26,7 +23,14 @@ void TestScene::Update()
 //•`‰æ
 void TestScene::Draw()
 {
-	kImage->Draw(transform_, RECT{ 0,0, 512,512 }, 1.0, 0, 360);
+	static float start = 90;
+	static float end = 90;
+	//start,end‚Í‚O`‚R‚U‚O‚Å“ü—Í
+	kImage->Draw(transform_, RECT{ 0,0, 512,512 }, 1.0, start, end);
+	end = end + 0.166;
+	if (end > 360)
+		end = end - 360;
+	
 }
 
 //ŠJ•ú
