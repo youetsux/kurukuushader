@@ -3,12 +3,12 @@
 #include "Engine/Model.h"
 #include "Weapon.h"
 
-class KuruKuruImage;
+class CircleGauge;
 //テストシーンを管理するクラス
 class TestScene : public GameObject
 {
-	KuruKuruImage* kImage;
 public:
+	CircleGauge* pGauge;
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
 	TestScene(GameObject* parent);
@@ -24,6 +24,5 @@ public:
 
 	//開放
 	void Release() override;
-	
-	Weapon* pWp;
+
 };

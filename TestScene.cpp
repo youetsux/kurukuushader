@@ -1,35 +1,37 @@
 #include "TestScene.h"
 #include "Player.h"
-#include "KuruKuruImage.h"
+#include "CircleGauge.h"
+#include "Engine/Input.h"
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 TestScene::TestScene(GameObject * parent)
-	: GameObject(parent, "TestScene")
+	: GameObject(parent, "TestScene"),pGauge(nullptr)
 {
 }
 
 //‰Šú‰»
 void TestScene::Initialize()
 {	
-	kImage = new KuruKuruImage();
-	kImage->Load("roundTimer.png");
+	pGauge = Instantiate<CircleGauge>(this);
+	pGauge->SetLapTime(15);
+	pGauge->SetStartAngle(0, false);
+	pGauge->SetPosition(-0.8, 0, 0);
+	pGauge->SetScale(0.5, 0.5, 0);
 }
 
 //XV
 void TestScene::Update()
 {
+	if(Input::IsKeyDown(DIK_SPACE))
+	{
+		pGauge->Start();
+	}
 }
 
 //•`‰æ
 void TestScene::Draw()
 {
-	static float start = 90;
-	static float end = 90;
-	//start,end‚Í‚O`‚R‚U‚O‚Å“ü—Í
-	kImage->Draw(transform_, RECT{ 0,0, 512,512 }, 1.0, start, end);
-	end = end + 0.166;
-	if (end > 360)
-		end = end - 360;
+
 	
 }
 
