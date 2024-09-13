@@ -97,7 +97,7 @@ void KuruKuruImage::SetDrawProperties(float startangle, bool isCounterClockwise,
 {
 	startAngle_ = startangle;
 	isCounterClockWise_ = isCounterClockwise;
-	isIncrease = isIncrease;
+	isIncrease_ = isIncrease;
 }
 
 void KuruKuruImage::Draw(Transform& transform, RECT rect, float alpha)
@@ -144,7 +144,7 @@ void KuruKuruImage::Draw(Transform& transform, RECT rect, float alpha)
 	// テクスチャ合成色情報を渡す
 	cb.color = XMFLOAT4(1, 1, 1, alpha);
 	cb.angle = XMFLOAT2(startAngle_, startAngle_);
-	cb.roundSetting = XMINT2(isCounterClockWise_, isIncrease_);
+	cb.roundSetting = XMINT2((int)isCounterClockWise_, (int)isIncrease_);
 
 	Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのリソースアクセスを一時止める
 	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));		// リソースへ値を送る

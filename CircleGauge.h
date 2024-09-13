@@ -6,6 +6,7 @@ class KuruKuruImage;
 class CircleGauge :
     public GameObject
 {
+	int hFrame;
 	KuruKuruImage* kImage_;
 	float gaugeAngle_;
 	float def_gaugeAngle_;//‰ŠúˆÊ’u‚ğ•Û‘¶

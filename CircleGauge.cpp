@@ -1,5 +1,6 @@
 #include "CircleGauge.h"
 #include "KuruKuruImage.h"
+#include "Engine/Image.h"
 
 CircleGauge::CircleGauge(GameObject* parent)
 	:GameObject(parent, "KuruKuru"),
@@ -9,7 +10,8 @@ CircleGauge::CircleGauge(GameObject* parent)
 
 void CircleGauge::Initialize()
 {
-	gaugeAngle_ = 0;
+	//hFrame = Image::Load("");
+	//gaugeAngle_ = 0;
 	kImage_ = new KuruKuruImage();
 	kImage_->Load("roundTimer.png");
 	lapTime_ = 60; //•b‚ÅŽw’èH ƒfƒtƒHƒ‹ƒg‚Í‚U‚O‚“
@@ -25,9 +27,14 @@ void CircleGauge::Update()
 	{
 		//start,end‚Í‚O`‚R‚U‚O‚Å“ü—Í
 		gaugeAngle_ = gaugeAngle_ + lapFrameTime_;
-		if (gaugeAngle_ > 360.0f) //‚È‚¢‚ÆŽv‚¤‚¯‚Ç•ÛŒ¯
-			gaugeAngle_ = gaugeAngle_ - 360.0f;
+		//if (gaugeAngle_ > 360.0f) //‚È‚¢‚ÆŽv‚¤‚¯‚Ç•ÛŒ¯
+		//	gaugeAngle_ = gaugeAngle_ - 360.0f;
+		if (gaugeAngle_ > 360.0) {
+			gaugeAngle_ = 360.0f;
+			Stop();
+		}
 	}
+	//Šp“xA‰ñ“]•ûŒüA‘‚¦‚éƒQ[ƒW‚©AŒ¸‚éƒQ[ƒW‚©
 	kImage_->SetDrawProperties(gaugeAngle_, true, isIncrease_);
 }
 
@@ -35,10 +42,7 @@ void CircleGauge::Draw()
 {
 	XMFLOAT3 isize = kImage_->GetTextureSize();
 	transform_.Calclation();
-	if (isIncrease_)
-		kImage_->Draw(transform_, RECT{ 0, 0, (int)isize.x, (int)isize.y }, 1.0);
-	else
-		kImage_->Draw(transform_, RECT{ 0, 0, (int)isize.x, (int)isize.y }, 1.0);
+	kImage_->Draw(transform_, RECT{ 0, 0, (int)isize.x, (int)isize.y }, 1.0);
 }
 
 void CircleGauge::Release()

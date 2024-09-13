@@ -13,27 +13,40 @@ TestScene::TestScene(GameObject * parent)
 void TestScene::Initialize()
 {	
 	pGauge = Instantiate<CircleGauge>(this);
-
 	pGauge->SetAngle(0, true);
-	pGauge->SetLapTime(10);
-	pGauge->SetPosition(-0.8, 0, 0);
-	pGauge->SetScale(0.3, 0.3, 0);
+	pGauge->SetLapTime(5);
+	pGauge->SetPosition(0, 0.8, 0);
+	pGauge->SetScale(0.2, 0.2, 0);
 }
 
 //XV
 void TestScene::Update()
 {
+	static bool isStart = false;
 	if(Input::IsKeyDown(DIK_SPACE))
 	{
-		pGauge->Start();
+		if (isStart)
+		{
+			pGauge->Stop();
+			isStart = false;
+		}
+		else
+		{
+			pGauge->Start();
+			isStart = true;
+		}
+	}
+	if (Input::IsKeyDown(DIK_R))
+	{
+		pGauge->Stop();
+		pGauge->Reset();
+		isStart = false;
 	}
 }
 
 //•`‰æ
 void TestScene::Draw()
-{
-
-	
+{	
 }
 
 //ŠJ•ú
