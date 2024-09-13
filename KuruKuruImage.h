@@ -27,7 +27,8 @@ protected:
 		XMMATRIX	world;		// 頂点座標変換行列
 		XMMATRIX	uvTrans;	// テクスチャ座標変換行列
 		XMFLOAT4	color;		// テクスチャとの合成色
-		XMFLOAT2	angle;		//扇形の角度　開始角度,　終了角度
+		XMFLOAT2	angle;		//扇形の角度
+		XMINT2		roundSetting; //x:反時計回りに開く？, y:開いていくか閉じていくか
 	};
 
 	//【頂点バッファ】
@@ -51,7 +52,9 @@ protected:
 	void InitVertex();			//頂点バッファ準備
 	void InitIndex();			//インデックスバッファ準備
 	void InitConstantBuffer();	//コンスタントバッファ（シェーダーに情報を送るやつ）準備
-
+	bool isCounterClockWise_;
+	bool isIncrease_;
+	float startAngle_;
 
 public:
 
@@ -64,11 +67,12 @@ public:
 	//戻値：成功/失敗
 	HRESULT Load(std::string fileName);
 
+	void SetDrawProperties(float startangle, bool isCounterClockwise, bool isIncrease);
 	//描画
 	//引数：matrix	変換行列（ワールド行列）
 	//引数：rect	画像の切り抜き範囲
 	//引数：alpha	アルファ値（不透明度）
-	void Draw(Transform& transform, RECT rect, float alpha, float startangle, float endangle);
+	void Draw(Transform& transform, RECT rect, float alpha);
 
 
 	//画像サイズの取得

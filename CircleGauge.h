@@ -7,10 +7,8 @@ class CircleGauge :
     public GameObject
 {
 	KuruKuruImage* kImage_;
-	float startAngle_;
-	float endAngle_;
-	float def_startAngle_;//初期位置を保存
-	float def_endAngle_;//初期位置を保存
+	float gaugeAngle_;
+	float def_gaugeAngle_;//初期位置を保存
 	float lapTime_;
 	float lapFrameTime_;
 	bool  isActive_;
@@ -32,7 +30,7 @@ public:
 	//開放
 	void Release() override;
 
-	void SetStartAngle(float start, bool isinc);
+	void SetAngle(float angle, bool isinc);
 	void SetLapTime(float laptime);
 	void Start();
 	void Stop();

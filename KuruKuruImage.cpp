@@ -93,7 +93,14 @@ HRESULT KuruKuruImage::Load(std::string fileName)
 	return S_OK;
 }
 
-void KuruKuruImage::Draw(Transform& transform, RECT rect, float alpha, float startangle, float endangle)
+void KuruKuruImage::SetDrawProperties(float startangle, bool isCounterClockwise, bool isIncrease)
+{
+	startAngle_ = startangle;
+	isCounterClockWise_ = isCounterClockwise;
+	isIncrease = isIncrease;
+}
+
+void KuruKuruImage::Draw(Transform& transform, RECT rect, float alpha)
 {
 	//いろいろ設定
 	Direct3D::SetShader(Direct3D::SHADER_KURUKURU);
@@ -136,7 +143,8 @@ void KuruKuruImage::Draw(Transform& transform, RECT rect, float alpha, float sta
 
 	// テクスチャ合成色情報を渡す
 	cb.color = XMFLOAT4(1, 1, 1, alpha);
-	cb.angle = XMFLOAT2(startangle, endangle);
+	cb.angle = XMFLOAT2(startAngle_, startAngle_);
+	cb.roundSetting = XMINT2(isCounterClockWise_, isIncrease_);
 
 	Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのリソースアクセスを一時止める
 	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));		// リソースへ値を送る

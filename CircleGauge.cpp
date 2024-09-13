@@ -3,20 +3,18 @@
 
 CircleGauge::CircleGauge(GameObject* parent)
 	:GameObject(parent, "KuruKuru"),
-	startAngle_(0), endAngle_(0), kImage_(nullptr), lapTime_(0)
+	gaugeAngle_(0), def_gaugeAngle_(0), kImage_(nullptr), lapTime_(0)
 {
 }
 
 void CircleGauge::Initialize()
 {
-	startAngle_ = 90;
-	endAngle_ = 90;
+	gaugeAngle_ = 0;
 	kImage_ = new KuruKuruImage();
 	kImage_->Load("roundTimer.png");
 	lapTime_ = 60; //秒で指定？ デフォルトは６０ｓ
 	lapFrameTime_ = 360.0f / (lapTime_ * 60);
-	def_startAngle_ = startAngle_; //リセット用に初期位置を保存
-	def_endAngle_ = endAngle_;		//リセット用に初期位置を保存
+	def_gaugeAngle_ = gaugeAngle_; //リセット用に初期位置を保存
 	isIncrease_ = true;
 	isActive_ = false;
 }
@@ -26,20 +24,21 @@ void CircleGauge::Update()
 	if (isActive_)
 	{
 		//start,endは０～３６０で入力
-		endAngle_ = endAngle_ + lapFrameTime_;
-		if (endAngle_ > 360.0f)
-			endAngle_ = endAngle_ - 360.0f;
+		gaugeAngle_ = gaugeAngle_ + lapFrameTime_;
+		if (gaugeAngle_ > 360.0f) //ないと思うけど保険
+			gaugeAngle_ = gaugeAngle_ - 360.0f;
 	}
+	kImage_->SetDrawProperties(gaugeAngle_, true, isIncrease_);
 }
 
 void CircleGauge::Draw()
 {
-	kImage_->GetTextureSize();
+	XMFLOAT3 isize = kImage_->GetTextureSize();
 	transform_.Calclation();
 	if (isIncrease_)
-		kImage_->Draw(transform_, RECT{ 0, 0, 512, 512 }, 1.0, startAngle_, endAngle_);
+		kImage_->Draw(transform_, RECT{ 0, 0, (int)isize.x, (int)isize.y }, 1.0);
 	else
-		kImage_->Draw(transform_, RECT{ 0, 0, 512, 512 }, 1.0, endAngle_, startAngle_);
+		kImage_->Draw(transform_, RECT{ 0, 0, (int)isize.x, (int)isize.y }, 1.0);
 }
 
 void CircleGauge::Release()
@@ -48,15 +47,13 @@ void CircleGauge::Release()
 }
 
 
-void CircleGauge::SetStartAngle(float start, bool isinc)
+void CircleGauge::SetAngle(float angle, bool isinc)
 {
-	if (isinc) {
-		startAngle_ = start;
-		endAngle_ = start - 0.0001f;
-	}
-	def_startAngle_ = startAngle_; //リセット用に初期位置を保存
-	def_endAngle_ = endAngle_;		//リセット用に初期位置を保存
+	gaugeAngle_ = angle;
 
+	def_gaugeAngle_ = gaugeAngle_; //リセット用に初期位置を保存
+
+	isIncrease_ = isinc;
 }
 
 void CircleGauge::SetLapTime(float laptime)
@@ -78,6 +75,5 @@ void CircleGauge::Stop()
 void CircleGauge::Reset()
 {
 	isActive_ = false;
-	startAngle_ = def_startAngle_;
-	endAngle_ = def_endAngle_;
+	gaugeAngle_ = def_gaugeAngle_;
 }
