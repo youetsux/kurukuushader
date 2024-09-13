@@ -34,12 +34,12 @@ void CircleGauge::Update()
 
 void CircleGauge::Draw()
 {
-	kImage_->GetTextureSize();
+	XMFLOAT3 isize = kImage_->GetTextureSize();
 	transform_.Calclation();
 	if (isIncrease_)
-		kImage_->Draw(transform_, RECT{ 0, 0, 512, 512 }, 1.0, startAngle_, endAngle_);
+		kImage_->Draw(transform_, RECT{ 0, 0, (int)isize.x, (int)isize.y }, 1.0, startAngle_, endAngle_);
 	else
-		kImage_->Draw(transform_, RECT{ 0, 0, 512, 512 }, 1.0, endAngle_, startAngle_);
+		kImage_->Draw(transform_, RECT{ 0, 0, (int)isize.x, (int)isize.y }, 1.0, endAngle_, startAngle_);
 }
 
 void CircleGauge::Release()
@@ -50,13 +50,11 @@ void CircleGauge::Release()
 
 void CircleGauge::SetStartAngle(float start, bool isinc)
 {
-	if (isinc) {
-		startAngle_ = start;
-		endAngle_ = start - 0.0001f;
-	}
+	startAngle_ = start;
+	endAngle_ = start;
 	def_startAngle_ = startAngle_; //リセット用に初期位置を保存
 	def_endAngle_ = endAngle_;		//リセット用に初期位置を保存
-
+	isIncrease_ = isinc;
 }
 
 void CircleGauge::SetLapTime(float laptime)

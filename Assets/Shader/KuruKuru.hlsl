@@ -39,13 +39,15 @@ VS_OUTPUT VS(float4 pos : POSITION, float4 uv : TEXCOORD)
 //───────────────────────────────────────
 // ピクセルシェーダ
 //───────────────────────────────────────
+
+//回転方法と、現在の角度だけでよくね？
 float4 PS(VS_OUTPUT input) : SV_Target
 {  
     float2 uvpos = float2(2.0 * input.uv.x - 1, 1.0 - 2 * input.uv.y);
-    float ang = atan2(uvpos.y, uvpos.x);
-    float dig = degrees(ang);
-    if (dig < 0)
-        dig = dig + 360;
+    float dig = (degrees(atan2(uvpos.y, uvpos.x)) + 360.0) % 360.0;
+    //if (dig < 0)
+    //    dig = dig + 360;
+    
     if (g_angle.x < g_angle.y)
     {
    
@@ -66,6 +68,7 @@ float4 PS(VS_OUTPUT input) : SV_Target
            return g_vecColor * g_texture.Sample(g_sampler, input.uv);
     }else
     {
-        return g_vecColor * g_texture.Sample(g_sampler, input.uv);
+        //return g_vecColor * g_texture.Sample(g_sampler, input.uv);
+        return (0, 0, 0, 0);
     }
 }
