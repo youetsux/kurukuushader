@@ -425,7 +425,7 @@ namespace Direct3D
 
 		//remonchiffon R:255 G:250 B:205
 		//”wŒi‚ÌF
-		float clearColor[4] = { 255.0/255.0f, 250/255.0f, 205/255.0f, 1.0f };//R,G,B,A
+		float clearColor[4] = { 125.0/255.0f, 125/255.0f, 155/255.0f, 1.0f };//R,G,B,A
 
 		//‰æ–Ê‚ðƒNƒŠƒA
 		pContext_->ClearRenderTargetView(pRenderTargetView_, clearColor);

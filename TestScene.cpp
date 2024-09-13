@@ -13,10 +13,11 @@ TestScene::TestScene(GameObject * parent)
 void TestScene::Initialize()
 {	
 	pGauge = Instantiate<CircleGauge>(this);
-	pGauge->SetAngle(0, true);
-	pGauge->SetLapTime(5);
-	pGauge->SetPosition(0, 0.8, 0);
-	pGauge->SetScale(0.2, 0.2, 0);
+	pGauge->SetAngle(0, false);
+	pGauge->SetLapTime(15);
+	pGauge->SetPosition(0, 0.6, 0);
+	pGauge->SetScale(0.3, 0.3, 0);
+	pGauge->SetRotate(0, 0, 90);
 }
 
 //XV

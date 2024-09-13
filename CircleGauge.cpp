@@ -10,10 +10,11 @@ CircleGauge::CircleGauge(GameObject* parent)
 
 void CircleGauge::Initialize()
 {
-	//hFrame = Image::Load("");
-	//gaugeAngle_ = 0;
+	hFrame = Image::Load("gaugeImage.png");
+	hBack = Image::Load("circleBack.png");
+
 	kImage_ = new KuruKuruImage();
-	kImage_->Load("roundTimer.png");
+	kImage_->Load("circle.png");
 	lapTime_ = 60; //秒で指定？ デフォルトは６０ｓ
 	lapFrameTime_ = 360.0f / (lapTime_ * 60);
 	def_gaugeAngle_ = gaugeAngle_; //リセット用に初期位置を保存
@@ -42,7 +43,11 @@ void CircleGauge::Draw()
 {
 	XMFLOAT3 isize = kImage_->GetTextureSize();
 	transform_.Calclation();
+	Image::SetTransform(hBack, transform_);
+	Image::Draw(hBack);
 	kImage_->Draw(transform_, RECT{ 0, 0, (int)isize.x, (int)isize.y }, 1.0);
+	Image::SetTransform(hFrame, transform_);
+	Image::Draw(hFrame);
 }
 
 void CircleGauge::Release()
